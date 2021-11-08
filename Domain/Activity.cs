@@ -2,7 +2,7 @@ using System;
 
 namespace Domain
 {
-    public class Activity
+    public class Activity : IEntity
     {
         // Entity framework knows about this specific naming convention
         // Designates it as the PK
