@@ -1,15 +1,25 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
-import ActivityDetails from '../details/ActivityDetails';
-import ActivityForm from '../form/ActivityForm';
 import ActivityList from './ActivityList';
 
 const ActivityDashboard = function() {
 
     const { activityStore } = useStore();
-    const { selectedActivity, editMode } = activityStore;
+    const { loadActivities, activityRegistry, loadingInitial } = activityStore;
+
+    console.log(`Dashboard Rendered: Initial load = ${loadingInitial}`);
+
+    useEffect(() => {
+
+        // No need to re-fetch if we have them in memory
+        if (activityRegistry.size <= 1) loadActivities();
+        
+    }, [activityRegistry.size, loadActivities]);
+
+    if(loadingInitial) return <LoadingComponent />
     
     return (
         <Grid>
@@ -18,15 +28,7 @@ const ActivityDashboard = function() {
             </Grid.Column>
 
             <Grid.Column width='6'>
-
-                {
-                    // Anything to the right of && will execute so long as left value is not null or undefined
-                    selectedActivity && !editMode && <ActivityDetails />
-                }
-
-                {
-                    editMode && <ActivityForm />
-                }
+                <h2>Activity Filters</h2>
             </Grid.Column>
         </Grid>
     )
