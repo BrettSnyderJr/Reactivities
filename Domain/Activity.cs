@@ -7,6 +7,7 @@ namespace Domain
         // Entity framework knows about this specific naming convention
         // Designates it as the PK
         public Guid Id { get; set; }
+
         public string Title { get; set; }
 
         public DateTime Date { get; set; }
