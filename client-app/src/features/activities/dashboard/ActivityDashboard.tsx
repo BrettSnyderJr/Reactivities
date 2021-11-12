@@ -11,7 +11,7 @@ const ActivityDashboard = function() {
     const { activityStore } = useStore();
     const { loadActivities, activityRegistry, loadingInitial } = activityStore;
 
-    console.log(`Dashboard Rendered: Initial load = ${loadingInitial}`);
+    //console.log(`Dashboard Rendered: Initial load = ${loadingInitial}`);
 
     useEffect(() => {
 
