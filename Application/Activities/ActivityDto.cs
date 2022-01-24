@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Application.Profiles;
 
-namespace Domain
+namespace Application.Activities
 {
-    public class Activity : IEntity
+    public class ActivityDto
     {
-        // Entity framework knows about this specific naming convention
-        // Designates it as the PK
         public Guid Id { get; set; }
 
         public string Title { get; set; }
@@ -23,6 +22,8 @@ namespace Domain
 
         public bool IsCancelled { get; set; }
 
-        public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
+        public string HostUsername { get; set; }
+
+        public ICollection<Profile> Attendees { get; set; }
     }
 }
