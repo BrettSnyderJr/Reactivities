@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Application.Profiles;
 
 namespace Application.Activities
 {
@@ -24,6 +23,6 @@ namespace Application.Activities
 
         public string HostUsername { get; set; }
 
-        public ICollection<Profile> Attendees { get; set; }
+        public ICollection<AttendeeDto> Attendees { get; set; }
     }
 }
