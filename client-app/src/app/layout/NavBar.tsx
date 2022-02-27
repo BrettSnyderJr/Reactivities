@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Button, Container, Menu, Image, Dropdown } from 'semantic-ui-react';
 import { useStore } from '../stores/store';
@@ -18,7 +18,7 @@ export default observer(function NavBar() {
                 <Menu.Item as={NavLink} to='/activities' name='Activities' />
                 <Menu.Item as={NavLink} to='/errors' name='Errors' />
                 <Menu.Item>
-                    <Button as={NavLink} to='/createactivity' positive content='Create Activity' />
+                    <Button as={NavLink} to='/activity/create' positive content='Create Activity' />
                 </Menu.Item>
                 <Menu.Item position='right'>
                     <Image src={user?.image || '/assets/user.png'} avatar spaced='right' />

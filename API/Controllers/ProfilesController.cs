@@ -13,5 +13,13 @@ namespace API.Controllers
 
             return HandleResult(result);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Edit(Edit.Command command) {
+
+            var result = await Mediator.Send(command);
+
+            return HandleResult(result);
+        }
     }
 }
