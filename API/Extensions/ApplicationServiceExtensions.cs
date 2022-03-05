@@ -22,9 +22,13 @@ namespace API.Extensions
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
 
+            // services.AddDbContext<DataContext>(opt =>
+            // {
+            //     opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
+            // });
             services.AddDbContext<DataContext>(opt =>
             {
-                opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
+                opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             });
             
             // Allow any method and header from local host origin

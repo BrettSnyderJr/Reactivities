@@ -15,7 +15,7 @@ const sleep = (delay: number) => {
     })
 }
 
-axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 axios.interceptors.request.use((config) => {
 
@@ -29,8 +29,10 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use(async response => {
 
-    // Async way
-    await sleep(1000);
+    // For testing requests - helps observe things like loading functionality
+    if (process.env.NODE_ENV === 'development') {
+        await sleep(1000);
+    }
 
     const pagination = response.headers['pagination'];
 
@@ -41,7 +43,7 @@ axios.interceptors.response.use(async response => {
 
     return response;
   
-    // Non async
+    // Non async way of using
     // return sleep(1000).then(() => {
     //     return response;
     // }).catch((error) => {
