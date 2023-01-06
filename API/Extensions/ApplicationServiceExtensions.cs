@@ -14,7 +14,8 @@ namespace API.Extensions
 {
     public static class ApplicationServiceExtensions
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config) { 
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
+        {
 
             // API documentation
             services.AddSwaggerGen(c =>
@@ -30,7 +31,7 @@ namespace API.Extensions
             {
                 opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             });
-            
+
             // Allow any method and header from local host origin
             services.AddCors(opt =>
             {
@@ -49,7 +50,7 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
-            
+
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
 
             services.AddSignalR();
