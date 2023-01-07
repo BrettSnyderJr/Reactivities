@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
@@ -15,7 +15,7 @@ const ProfilePage = function () {
 
     useEffect(() => { 
 
-        loadProfile(username);
+        if(username) loadProfile(username);
 
         return () => { 
             setActiveTab(0);

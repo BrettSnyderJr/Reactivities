@@ -3,11 +3,11 @@ import { Photo, Profile, UserActivity } from './../models/profile';
 import { ActivityFormValues } from './../models/activity';
 import { UserFormValues } from './../models/user';
 import { store } from './../stores/store';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosHeaders, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
-import { history } from '../..';
 import { Activity } from '../models/activity';
 import { User } from '../models/user';
+import { router } from '../router/Routes';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -21,8 +21,9 @@ axios.interceptors.request.use((config) => {
 
     const token = store.commonStore.token;
 
-    if (token) {
-        config.headers!.Authorization = `Bearer ${token}`;
+    if (token && config.headers) {
+        config.headers = { ...config.headers } as AxiosHeaders;
+        config.headers.set('Authorization', `Bearer ${token}`);
     }
     return config;
 });
@@ -72,7 +73,7 @@ axios.interceptors.response.use(async response => {
 
             // Handles bad guid
             if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
-                history.push('/not-found');
+                router.navigate('/not-found');
             }
 
             if (data.errors) {
@@ -96,13 +97,13 @@ axios.interceptors.response.use(async response => {
         
         case 404:
             //toast.error('not found');
-            history.push('/not-found');
+            router.navigate('/not-found');
             break;
         
         case 500:
             //toast.error('server error');
             store.commonStore.setServerError(data);
-            history.push('/server-error');
+            router.navigate('/server-error');
             break;
     }
 

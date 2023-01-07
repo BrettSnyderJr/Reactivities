@@ -3,7 +3,7 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import agent from '../api/agent';
 import { User } from '../models/user';
 import { store } from './store';
-import { history } from '../..';
+import { router } from '../router/Routes';
 
 export default class UserStore {
 
@@ -26,7 +26,7 @@ export default class UserStore {
                 this.user = user;
             });
 
-            history.push('/activities');
+            router.navigate('/activities');
 
             store.modalStore.closeModal();
             
@@ -41,7 +41,7 @@ export default class UserStore {
         store.commonStore.setToken(null);
         window.localStorage.removeItem('jwt');
         this.user = null;
-        history.push('/');
+        router.navigate('/');
     }
 
     getUser = async () => {
@@ -63,7 +63,7 @@ export default class UserStore {
                 this.user = user;
             });
 
-            history.push('/activities');
+            router.navigate('/activities');
 
             store.modalStore.closeModal();
             

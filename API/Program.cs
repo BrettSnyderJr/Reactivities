@@ -8,13 +8,6 @@ builder.Services.AddControllers(opt =>
     var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
     opt.Filters.Add(new AuthorizeFilter(policy));
 });
-// .AddFluentValidation(config => {
-//     config.RegisterValidatorsFromAssemblyContaining<Create>();
-// });
-
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddFluentValidationClientsideAdapters();
-builder.Services.AddValidatorsFromAssemblyContaining<Create>();
 
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
@@ -35,7 +28,7 @@ app.UseCsp(opt => opt
     .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
     .FormActions(s => s.Self())
     .FrameAncestors(s => s.Self())
-    .ImageSources(s => s.Self().CustomSources("https://res.cloudinary.com"))
+    .ImageSources(s => s.Self().CustomSources("blob:", "https://res.cloudinary.com"))
     .ScriptSources(s => s.Self().CustomSources("sha256-kXwZFeDqzQYQxMANlJcsdedkJvek1q5ncjzFrCq4x+I="))
 );
 
@@ -54,9 +47,6 @@ else
     });
 }
 
-//app.UseHttpsRedirection();
-//app.UseRouting();
-
 // Looks for index.html in wwwroot folder
 // Serve static files from wwwroot
 app.UseDefaultFiles();
@@ -68,12 +58,6 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-// app.UseEndpoints(endpoints =>
-// {
-//     endpoints.MapControllers();
-//     endpoints.MapHub<ChatHub>("/chat");
-//     endpoints.MapFallbackToController("Index", "Fallback");
-// });
 app.MapControllers();
 app.MapHub<ChatHub>("/chat");
 app.MapFallbackToController("Index", "Fallback");
@@ -82,12 +66,10 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 using (var scope = app.Services.CreateScope())
 {
-
     var services = scope.ServiceProvider;
 
     try
     {
-
         // Attempt to apply db migrations when starting app
         var context = services.GetRequiredService<DataContext>();
         var userManager = services.GetRequiredService<UserManager<AppUser>>();
@@ -99,7 +81,6 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "An error occured during database migration");
     }

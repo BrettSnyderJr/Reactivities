@@ -4,11 +4,7 @@ using Application.Interfaces;
 using Infrastructure.Photos;
 using Infrastructure.Security;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Persistence;
 
 namespace API.Extensions
 {
@@ -54,6 +50,10 @@ namespace API.Extensions
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
 
             services.AddSignalR();
+
+            services.AddFluentValidationAutoValidation();
+            services.AddFluentValidationClientsideAdapters();
+            services.AddValidatorsFromAssemblyContaining<Create>();
 
             return services;
         }
