@@ -53,7 +53,11 @@ axios.interceptors.response.use(async response => {
 
 }, (error: AxiosError) => {
 
-    const { data, status, config } = error.response!;
+    // if (!error.response) { 
+    //     return Promise.reject(error);
+    // }
+
+    const { data, status, config } = error.response as AxiosResponse;
 
     //console.log(error.response);
 
