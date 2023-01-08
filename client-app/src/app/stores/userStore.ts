@@ -30,7 +30,7 @@ export default class UserStore {
 
             store.modalStore.closeModal();
             
-            console.log(user);
+            //console.log(user);
         }
         catch (error) {
             throw error;
@@ -67,7 +67,7 @@ export default class UserStore {
 
             store.modalStore.closeModal();
             
-            console.log(user);
+            //console.log(user);
         }
         catch (error) {
             throw error;
