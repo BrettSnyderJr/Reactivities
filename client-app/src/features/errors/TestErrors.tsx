@@ -4,31 +4,31 @@ import axios from 'axios';
 import ValidationErrors from './ValidationErrors';
 
 export default function TestErrors() {
-    const baseUrl = process.env.REACT_APP_API_URL
+    //const baseUrl = process.env.REACT_APP_API_URL
     const [errors, setErrors] = useState(null);
 
     function handleNotFound() {
-        axios.get(baseUrl + 'buggy/not-found').catch(err => err.response);
+        axios.get('/buggy/not-found').catch(err => err.response);
     }
 
     function handleBadRequest() {
-        axios.get(baseUrl + 'buggy/bad-request').catch(err => err.response);
+        axios.get('/buggy/bad-request').catch(err => err.response);
     }
 
     function handleServerError() {
-        axios.get(baseUrl + 'buggy/server-error').catch(err => err.response);
+        axios.get('/buggy/server-error').catch(err => err.response);
     }
 
     function handleUnauthorized() {
-        axios.get(baseUrl + 'buggy/unauthorized').catch(err => err.response);
+        axios.get('/buggy/unauthorized').catch(err => err.response);
     }
 
     function handleBadGuid() {
-        axios.get(baseUrl + 'activities/notaguid').catch(err =>err);
+        axios.get('/activities/notaguid').catch(err =>err);
     }
 
     function handleValidationError() {
-        axios.post(baseUrl + 'activities', {}).catch(err => setErrors(err));
+        axios.post('/activities', {}).catch(err => setErrors(err));
     }
 
     return (
