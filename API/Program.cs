@@ -47,24 +47,19 @@ else
     });
 }
 
-app.UseCors("Cors Policy");
+app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.MapControllers();
 app.MapHub<ChatHub>("/chat");
+app.MapFallbackToController("Index", "Fallback");
 
-// We only want to host in production
-if (!app.Environment.IsDevelopment())
-{
-    // Looks for index.html in wwwroot folder
-    // Serve static files from wwwroot
-    app.UseDefaultFiles();
-    app.UseStaticFiles();
-    app.MapFallbackToController("Index", "Fallback");
-    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-}
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 using (var scope = app.Services.CreateScope())
 {
