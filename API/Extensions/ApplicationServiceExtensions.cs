@@ -19,10 +19,6 @@ namespace API.Extensions
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
 
-            // services.AddDbContext<DataContext>(opt =>
-            // {
-            //     opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
-            // });
             services.AddDbContext<DataContext>(options =>
             {
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -34,7 +30,9 @@ namespace API.Extensions
                 if (env == "Development")
                 {
                     // Use connection string from file.
-                    connStr = config.GetConnectionString("DefaultConnection");
+                    //connStr = config.GetConnectionString("DefaultConnection");
+
+                    options.UseSqlite(config.GetConnectionString("DevConnection"));
                 }
                 else
                 {
@@ -53,11 +51,11 @@ namespace API.Extensions
                     var pgPort = pgHostPort.Split(":")[1];
 
                     connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
-                }
 
-                // Whether the connection string came from the local development configuration file
-                // or from the environment variable from FlyIO, use it to set up your DbContext.
-                options.UseNpgsql(connStr);
+                    // Whether the connection string came from the local development configuration file
+                    // or from the environment variable from FlyIO, use it to set up your DbContext.
+                    options.UseNpgsql(connStr);
+                }
             });
 
 

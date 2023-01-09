@@ -19,12 +19,15 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 axios.interceptors.request.use((config) => {
 
-    const token = store.commonStore.token;
+    const token = store.commonStore.token; 
 
+    //if (token && config.headers) config.headers.Authorization = `Bearer ${token}`;
     if (token && config.headers) {
-        config.headers = { ...config.headers } as AxiosHeaders;
-        config.headers.set('Authorization', `Bearer ${token}`);
+        (config.headers as AxiosHeaders).set('Authorization', `Bearer ${token}`);
     }
+
+    //console.log(config);
+
     return config;
 });
 
@@ -54,10 +57,12 @@ axios.interceptors.response.use(async response => {
 
 }, (error: AxiosError) => {
 
-    // if (!error.response) { 
+    // if (!error.response) {
     //     return Promise.reject(error);
     // }
 
+    //console.log(error);
+    
     const { data, status, config } = error.response as AxiosResponse;
 
     //console.log(error.response);
