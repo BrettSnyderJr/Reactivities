@@ -14,6 +14,7 @@ export default class ProfileStore {
     activeTab = 0;
     userActivities: UserActivity[] = [];
     loadingActivities = false;
+    hasChanged = false;
     
     constructor() { 
         makeAutoObservable(this);
@@ -113,6 +114,10 @@ export default class ProfileStore {
                     this.profile.photos.find(p => p.isMain)!.isMain = false;
                     this.profile.photos.find(p => p.id === photo.id)!.isMain = true;
                     this.profile.image = photo.url;
+
+                    //this.loadUserActivities(this.profile.username);
+                    store.activityStore.setActivitiesNeedReload(true);
+                    
                 }
                 
                 this.loading = false;
@@ -164,6 +169,10 @@ export default class ProfileStore {
 
                 this.profile = { ...this.profile, ...profile as Profile }; 
                 store.userStore.setDisplayName(profile.displayName!);
+
+                //this.loadUserActivities(this.profile.username);
+                store.activityStore.setActivitiesNeedReload(true);
+
                 //}
  
                 this.loading = false;

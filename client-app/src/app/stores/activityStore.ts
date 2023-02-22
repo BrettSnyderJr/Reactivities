@@ -16,7 +16,9 @@ export default class ActivityStore {
     loadingInitial = false;
     pagination: Pagination | null = null;
     pagingParams = new PagingParams();
+    pagingParamsRefresh = new PagingParams();
     predicate = new Map().set('all', true);
+    activitiesNeedReload = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -74,10 +76,11 @@ export default class ActivityStore {
     }
 
     get axiosParams() { 
+
         const params = new URLSearchParams();
 
-        params.append('pageNumber', this.pagingParams.pageNumber.toString());
-        params.append('pageSize', this.pagingParams.pageSize.toString());
+        params.append('pageNumber', this.activitiesNeedReload ? "1" : this.pagingParams.pageNumber.toString());
+        params.append('pageSize', this.activitiesNeedReload ? this.activityRegistry.size.toString() : this.pagingParams.pageSize.toString());
 
         this.predicate.forEach((value, key) => {
 
@@ -127,6 +130,8 @@ export default class ActivityStore {
             })
 
             this.setPagination(result.pagination);
+
+            this.setActivitiesNeedReload(false);
 
             this.setLoadingInitial(false);
 
@@ -242,6 +247,10 @@ export default class ActivityStore {
 
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
+    }
+
+    setActivitiesNeedReload = (state: boolean) => {
+        this.activitiesNeedReload = state;
     }
 
     updateAttendance = async () => {

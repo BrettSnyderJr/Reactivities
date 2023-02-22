@@ -63,13 +63,13 @@ namespace API.Extensions
             // Allow any method and header from local host origin
             services.AddCors(opt =>
             {
-                opt.AddPolicy("Cors Policy", policy =>
+                opt.AddPolicy("CorsPolicy", policy =>
                 {
                     policy
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()
-                    .WithOrigins("http://localhost:3000");
+                    .WithOrigins("http://localhost:3000", "http://localhost:5000");
                 });
             });
 

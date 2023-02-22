@@ -17,8 +17,8 @@ import RequireAuth from "./RequireAuth";
                 element: <RequireAuth />, children: [
                 {path: 'activities', element: <ActivityDashboard />},
                 {path: 'activities/:id', element: <ActivityDetails />},
-                {path: 'createActivity', element: <ActivityForm key='create' />},
-                {path: 'manage/:id', element: <ActivityForm key='manage' />},
+                {path: 'activity/create', element: <ActivityForm key='create' />},
+                {path: 'activity/manage/:id', element: <ActivityForm key='manage' />},
                 {path: 'profiles/:username', element: <ProfilePage />},
                 {path: 'errors', element: <TestErrors />},
             ]},       

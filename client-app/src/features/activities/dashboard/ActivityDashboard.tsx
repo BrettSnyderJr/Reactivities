@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Grid, Loader } from 'semantic-ui-react';
 //import LoadingComponent from '../../../app/layout/LoadingComponent';
@@ -12,7 +12,7 @@ import ActivityListItemPlaceholder from './ActivityListItemPlaceholder';
 const ActivityDashboard = function() {
 
     const { activityStore } = useStore();
-    const { loadActivities, activityRegistry, loadingInitial, setPagingParams, pagination } = activityStore;
+    const { loadActivities, activityRegistry, loadingInitial, setPagingParams, pagination, activitiesNeedReload } = activityStore;
     const [loadingNext, setLoadingNext] = useState(false);
 
     //console.log(`Dashboard Rendered: Initial load = ${loadingInitial}`);
@@ -27,9 +27,9 @@ const ActivityDashboard = function() {
     useEffect(() => {
 
         // No need to re-fetch if we have them in memory
-        if (activityRegistry.size <= 1) loadActivities();
+        if (activitiesNeedReload || activityRegistry.size <= 1) loadActivities();
         
-    }, [activityRegistry.size, loadActivities]);
+    }, [activityRegistry.size, loadActivities, activitiesNeedReload]);
 
     // if(loadingInitial && !loadingNext) return <LoadingComponent content='Loading Activities' />
     
