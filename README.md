@@ -1,13 +1,8 @@
-#Reactivities
+# **Reactivities**
 
-This is a project that was designed strictly for learning and exploration of using .Net Core API with React. Also serves as a strong reference for starting real world projects.
+## Reactivities is a simple web application for managing and hosting events and collaborating with friends. This is a project that was designed strictly for learning and exploration of using .Net Core API with React. Also serves as a strong reference for starting real world projects.
 
-Reactivities is a simple web application for managing and hosting events and collaborating with friends.
-
-#Tech Stack
-
-  #Backend
-  
+  ## Backend
     .NET 7 APIs (using MediatR pattern)
     C#
     Entity Framework (ORM)
@@ -16,17 +11,15 @@ Reactivities is a simple web application for managing and hosting events and col
     PostgreSQL (DB)
     JWT Authentication
     Swashbuckle, Automapper, FluentValidation
-    
-  #Frontend
+  ## Frontend
   
     React 17 + Typescript
     MobX (state management)
     Axios
     React Router
     Formik, Yup
-    Semantic UI React (CSS)
-    
-  #Tooling
+    Semantic UI React (CSS) 
+  ## Tooling
   
     VS Code
     Docker
