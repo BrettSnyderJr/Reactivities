@@ -1,10 +1,9 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { Modal } from 'semantic-ui-react';
 import { useStore } from '../../stores/store';
 
 const ModalContainer = function () {
-    
+
     const { modalStore } = useStore();
 
     return (

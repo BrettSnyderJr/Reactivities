@@ -1,13 +1,13 @@
 import { Formik, Form, Field, FieldProps } from 'formik'
 import { observer } from 'mobx-react-lite'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Segment, Header, Comment, Loader } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store'
 import * as Yup from 'yup';
 import { formatDistanceToNow } from 'date-fns'
 
-interface Props { 
+interface Props {
 
     activityId: string;
 }
@@ -16,13 +16,13 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
 
     const { commentStore } = useStore();
 
-    useEffect(() => { 
+    useEffect(() => {
 
-        if (activityId) { 
+        if (activityId) {
             commentStore.createHubConnection(activityId);
         }
 
-        return () => { 
+        return () => {
             commentStore.clearComments();
         }
 
@@ -39,7 +39,7 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
             >
                 <Header>Chat about this event</Header>
             </Segment>
-            
+
             <Segment attached clearing>
 
                 <Formik
@@ -61,10 +61,10 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                                             rows={2}
                                             {...props.field}
                                             onKeyPress={e => {
-                                                if (e.key === 'Enter' && e.shiftKey) { 
+                                                if (e.key === 'Enter' && e.shiftKey) {
                                                     return;
                                                 }
-                                                if (e.key === 'Enter' && !e.shiftKey) { 
+                                                if (e.key === 'Enter' && !e.shiftKey) {
                                                     e.preventDefault();
                                                     isValid && handleSubmit();
                                                 }
@@ -83,7 +83,7 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                         <Comment key={comment.id}>
 
                             <Comment.Avatar src={comment.image || '/assets/user.png'} />
-                            
+
                             <Comment.Content>
 
                                 <Comment.Author

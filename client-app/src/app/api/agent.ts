@@ -15,11 +15,11 @@ const sleep = (delay: number) => {
     })
 }
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 axios.interceptors.request.use((config) => {
 
-    const token = store.commonStore.token; 
+    const token = store.commonStore.token;
 
     //if (token && config.headers) config.headers.Authorization = `Bearer ${token}`;
     if (token && config.headers) {
@@ -34,19 +34,19 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(async response => {
 
     // For testing requests - helps observe things like loading functionality
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
         await sleep(1000);
     }
 
     const pagination = response.headers['pagination'];
 
-    if (pagination) { 
+    if (pagination) {
         response.data = new PaginatedResult(response.data, JSON.parse(pagination));
-        return response as AxiosResponse<PaginatedResult<any>>;
+        return response as AxiosResponse<PaginatedResult<unknown>>;
     }
 
     return response;
-  
+
     // Non async way of using
     // return sleep(1000).then(() => {
     //     return response;
@@ -62,7 +62,7 @@ axios.interceptors.response.use(async response => {
     // }
 
     //console.log(error);
-    
+
     const { data, status, config } = error.response as AxiosResponse;
 
     //console.log(error.response);
@@ -77,7 +77,7 @@ axios.interceptors.response.use(async response => {
             }
 
             // Handles bad guid
-            if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
+            if (config.method === 'get' && Object.prototype.hasOwnProperty.call(data.errors, 'id')) {
                 router.navigate('/not-found');
             }
 
@@ -93,18 +93,18 @@ axios.interceptors.response.use(async response => {
 
                 throw modalStateErrors.flat();
             }
-            
+
             break;
-        
+
         case 401:
             toast.error('unauthorized');
             break;
-        
+
         case 404:
             //toast.error('not found');
             router.navigate('/not-found');
             break;
-        
+
         case 500:
             //toast.error('server error');
             store.commonStore.setServerError(data);
@@ -119,8 +119,8 @@ const responseBody = <T> (response: AxiosResponse<T>) => response.data;
 
 const requests = {
     get: <T> (url: string) => axios.get<T>(url).then(responseBody),
-    post: <T> (url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
-    put: <T> (url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
+    post: <T> (url: string, body: object) => axios.post<T>(url, body).then(responseBody),
+    put: <T> (url: string, body: object) => axios.put<T>(url, body).then(responseBody),
     delete: <T> (url: string) => axios.delete<T>(url).then(responseBody),
 }
 
@@ -143,8 +143,8 @@ const Account = {
 
 const Profiles = {
     get: (username: string) => requests.get<Profile>(`/profiles/${username}`),
-    uploadPhoto: (file: Blob) => { 
-        let formData = new FormData();
+    uploadPhoto: (file: Blob) => {
+        const formData = new FormData();
         formData.append('File', file);
         return axios.post<Photo>('photos', formData, {
             headers: {'Content-type':'multipart/form-data'}

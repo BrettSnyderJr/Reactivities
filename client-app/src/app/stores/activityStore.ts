@@ -24,7 +24,7 @@ export default class ActivityStore {
         makeAutoObservable(this);
         reaction(
             () => this.predicate.keys(),
-            () => { 
+            () => {
                 this.pagingParams = new PagingParams();
                 this.activityRegistry.clear();
                 this.loadActivities();
@@ -32,16 +32,16 @@ export default class ActivityStore {
         )
     }
 
-    setPagingParams = (pagingParams: PagingParams) => { 
+    setPagingParams = (pagingParams: PagingParams) => {
 
         this.pagingParams = pagingParams;
     }
 
-    setPredicate = (predicate: string, value: string | Date) => { 
+    setPredicate = (predicate: string, value: string | Date) => {
 
-        const resetPredicate = () => { 
-            this.predicate.forEach((value, key) => { 
-                if (key !== 'startDate') { 
+        const resetPredicate = () => {
+            this.predicate.forEach((_, key) => {
+                if (key !== 'startDate') {
                     this.predicate.delete(key);
                 }
             })
@@ -54,28 +54,28 @@ export default class ActivityStore {
                 resetPredicate();
                 this.predicate.set('all', true);
                 break;
-            
+
             case "isGoing":
 
                 resetPredicate();
-                this.predicate.set('isGoing', true);         
+                this.predicate.set('isGoing', true);
                 break;
-            
+
             case "isHost":
-                
+
                 resetPredicate();
-                this.predicate.set('isHost', true);         
+                this.predicate.set('isHost', true);
                 break;
-            
+
             case "startDate":
-                
+
                 this.predicate.delete('startDate');
                 this.predicate.set('startDate', value);
                 break;
         }
     }
 
-    get axiosParams() { 
+    get axiosParams() {
 
         const params = new URLSearchParams();
 
@@ -87,7 +87,7 @@ export default class ActivityStore {
             if (key === 'startDate') {
                 params.append(key, (value as Date).toISOString());
             }
-            else { 
+            else {
                 params.append(key, value);
             }
         });
@@ -103,11 +103,11 @@ export default class ActivityStore {
     get groupedActivities() {
         return Object.entries(
             this.activitiesByDate.reduce((activities, activity) => {
-                
+
                 const date = format(activity.date!, 'dd MMM yyyy');
                 activities[date] = activities[date] ? [...activities[date], activity] : [activity];
                 return activities;
-                
+
             }, {} as {[key: string]: Activity[]})
         );
     }
@@ -141,14 +141,14 @@ export default class ActivityStore {
         }
     }
 
-    setPagination = (pagination: Pagination) => { 
+    setPagination = (pagination: Pagination) => {
         this.pagination = pagination;
     }
 
     loadActivity = async (id: string) => {
 
         let activity = this.getActivity(id);
-        
+
         // If activity already in memory return it
         // else fetch from api
         if (activity) {
@@ -169,7 +169,7 @@ export default class ActivityStore {
                 runInAction(() => {
                     this.selectedActivity = activity;
                 })
-                
+
                 this.setLoadingInitial(false);
 
                 return activity;
@@ -182,7 +182,7 @@ export default class ActivityStore {
     }
 
     createActivity = async (activity: ActivityFormValues) => {
-        
+
         const user = store.userStore.user;
         const attendee = new Profile(user!);
 
@@ -204,15 +204,15 @@ export default class ActivityStore {
     }
 
     updateActivity = async (activity: ActivityFormValues) => {
-        
+
         try {
 
             await agent.Activities.update(activity);
 
             runInAction(() => {
 
-                if (activity.id) { 
-                    let updatedActivity = { ...this.getActivity(activity.id), ...activity }
+                if (activity.id) {
+                    const updatedActivity = { ...this.getActivity(activity.id), ...activity }
                     this.activityRegistry.set(activity.id, updatedActivity as Activity);
                     this.selectedActivity = updatedActivity as Activity;
                 }
@@ -232,7 +232,7 @@ export default class ActivityStore {
             await agent.Activities.delete(id);
 
             runInAction(() => {
-                
+
                 this.activityRegistry.delete(id);
                 this.loading = false;
             })
@@ -261,7 +261,7 @@ export default class ActivityStore {
         try {
             await agent.Activities.attend(this.selectedActivity!.id);
 
-            runInAction(() => { 
+            runInAction(() => {
 
                 if (this.selectedActivity?.isGoing) {
                     this.selectedActivity.attendees = this.selectedActivity.attendees?.filter(a => a.username !== user?.username);
@@ -275,14 +275,14 @@ export default class ActivityStore {
                 this.activityRegistry.set(this.selectedActivity!.id, this.selectedActivity!);
             })
 
-        } catch (error) { 
+        } catch (error) {
             console.log(error);
-        }finally{ 
+        }finally{
             runInAction(() => this.loading = false);
         }
     }
 
-    cancelActivityToggle = async () => { 
+    cancelActivityToggle = async () => {
 
         this.loading = true;
 
@@ -290,14 +290,14 @@ export default class ActivityStore {
 
             await agent.Activities.attend(this.selectedActivity!.id);
 
-            runInAction(() => { 
+            runInAction(() => {
                 this.selectedActivity!.isCancelled = !this.selectedActivity?.isCancelled;
                 this.activityRegistry.set(this.selectedActivity!.id, this.selectedActivity!);
             })
 
-        } catch (error) { 
+        } catch (error) {
             console.log(error);
-        }finally{ 
+        }finally{
             runInAction(() => this.loading = false);
         }
     }
@@ -307,7 +307,7 @@ export default class ActivityStore {
 
         const user = store.userStore.user;
 
-        if (user) { 
+        if (user) {
 
             // If a user is in attendees list
             activity.isGoing = activity.attendees!.some(
@@ -326,15 +326,15 @@ export default class ActivityStore {
         return this.activityRegistry.get(id);
     }
 
-    clearSelectedActivity = () => { 
+    clearSelectedActivity = () => {
         this.selectedActivity = undefined;
     }
 
-    updateAttendeeFollowing = (username: string) => { 
+    updateAttendeeFollowing = (username: string) => {
 
-        this.activityRegistry.forEach(activity => { 
-            activity.attendees.forEach(attendee => { 
-                if (attendee.username === username) { 
+        this.activityRegistry.forEach(activity => {
+            activity.attendees.forEach(attendee => {
+                if (attendee.username === username) {
                     attendee.following ? attendee.followersCount-- : attendee.followersCount++;
                     attendee.following = !attendee.following;
                 }

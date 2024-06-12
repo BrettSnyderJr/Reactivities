@@ -4,14 +4,14 @@ import { Header, Menu } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 
 const ActivityFilters = function () {
-    
+
     const { activityStore: { predicate, setPredicate } } = useStore();
 
     return (
         <>
             <Menu vertical size='large' style={{ width: '100%', marginTop: 28 }}>
-                <Header icon='filter' attached color='teal' content='Filters' />  
-                
+                <Header icon='filter' attached color='teal' content='Filters' />
+
                 <Menu.Item
                     content="All Activities"
                     active={predicate.has('all')}
@@ -33,7 +33,7 @@ const ActivityFilters = function () {
             <Header />
 
             <Calendar
-                onChange={(date: Date) => setPredicate('startDate', date)}
+                onChange={(date) => setPredicate('startDate', date as Date)}
                 value={predicate.get('startDate') || new Date()}
             />
         </>

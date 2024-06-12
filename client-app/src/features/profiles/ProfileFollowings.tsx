@@ -1,16 +1,15 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { Card, Grid, Header, Tab } from 'semantic-ui-react';
+import { Card, Grid, Header, TabPane } from 'semantic-ui-react';
 import { useStore } from '../../app/stores/store';
 import ProfileCard from './ProfileCard';
 
 const ProfileFollowings = function () {
-    
+
     const { profileStore } = useStore();
     const { profile, followings, loadingFollowings, activeTab } = profileStore;
 
     return (
-        <Tab.Pane loading={loadingFollowings}>
+        <TabPane loading={loadingFollowings}>
             <Grid>
                 <Grid.Column width={16}>
 
@@ -34,7 +33,7 @@ const ProfileFollowings = function () {
                     </Card.Group>
                 </Grid.Column>
             </Grid>
-        </Tab.Pane>
+        </TabPane>
     );
 };
 

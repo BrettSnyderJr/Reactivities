@@ -1,5 +1,4 @@
 import { useField } from 'formik';
-import React from 'react';
 import { Form, Label } from 'semantic-ui-react';
 
 interface Props {
@@ -10,7 +9,7 @@ interface Props {
 }
 
 const MyTextInput = function (props: Props) {
-    
+
     const [field, meta] = useField(props.name)
 
     return (

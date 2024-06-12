@@ -1,11 +1,10 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Icon, Image } from 'semantic-ui-react';
 import { Profile } from '../../app/models/profile';
 import FollowButton from './FollowButton';
 
-interface Props { 
+interface Props {
     profile: Profile;
 }
 

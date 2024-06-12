@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react-lite';
 import { SyntheticEvent, useState } from 'react';
-import { Button, Card, Grid, Header, Image, Tab } from 'semantic-ui-react';
+import { Button, Card, Grid, Header, Image, TabPane } from 'semantic-ui-react';
 import PhotoUploadWidget from '../../app/common/imageUpload/PhotoUploadWidget';
 import { Photo, Profile } from '../../app/models/profile';
 import { useStore } from '../../app/stores/store';
 
-interface Props { 
+interface Props {
     profile: Profile
 }
 
@@ -17,22 +17,22 @@ const ProfilePhotos = function ({ profile }: Props) {
 
     function handlePhotoUpload(file: Blob) {
         uploadPhoto(file).then(() => {
-            setAddPhotoMode(false);          
+            setAddPhotoMode(false);
         })
     }
 
-    function handleSetMainPhoto(photo: Photo, e: SyntheticEvent<HTMLButtonElement>) { 
+    function handleSetMainPhoto(photo: Photo, e: SyntheticEvent<HTMLButtonElement>) {
         setTarget(e.currentTarget.name);
         setMainPhoto(photo);
     }
 
-    function handleDeletePhoto(photo: Photo, e: SyntheticEvent<HTMLButtonElement>) { 
+    function handleDeletePhoto(photo: Photo, e: SyntheticEvent<HTMLButtonElement>) {
         setTarget(e.currentTarget.name);
         deletePhoto(photo);
     }
 
     return (
-        <Tab.Pane>
+        <TabPane>
 
             <Grid>
 
@@ -58,7 +58,7 @@ const ProfilePhotos = function ({ profile }: Props) {
                     ):(
                         <Card.Group itemsPerRow={5}>
 
-                            {profile.photos?.map((photo) => {                                    
+                            {profile.photos?.map((photo) => {
                                 return (
                                     <Card key={photo.id}>
                                         <Image src={photo.url} />
@@ -88,13 +88,13 @@ const ProfilePhotos = function ({ profile }: Props) {
                                 );
                             })}
 
-                        </Card.Group>  
+                        </Card.Group>
                     )}
 
                 </Grid.Column>
             </Grid>
-            
-        </Tab.Pane>
+
+        </TabPane>
     );
 };
 

@@ -1,5 +1,4 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Container, Header, Image, Segment } from 'semantic-ui-react';
 import { useStore } from '../../app/stores/store';
@@ -7,7 +6,7 @@ import LoginForm from '../users/LoginForm';
 import RegisterForm from '../users/RegisterForm';
 
 const HomePage = function () {
-    
+
     const { userStore, modalStore } = useStore();
 
 
@@ -27,7 +26,7 @@ const HomePage = function () {
                             <Button as={Link} to='/activities' size='huge' inverted>
                                 Go to Activities
                             </Button>
-                        </>                 
+                        </>
                     ) :
                     (
                         <>

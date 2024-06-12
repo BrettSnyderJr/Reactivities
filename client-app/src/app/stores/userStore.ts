@@ -29,10 +29,11 @@ export default class UserStore {
             router.navigate('/activities');
 
             store.modalStore.closeModal();
-            
+
             //console.log(user);
         }
         catch (error) {
+            console.log(error);
             throw error;
         }
     }
@@ -54,7 +55,7 @@ export default class UserStore {
     }
 
     register = async (creds: UserFormValues) => {
-        
+
         try {
             const user = await agent.Account.register(creds);
             store.commonStore.setToken(user.token);
@@ -66,21 +67,22 @@ export default class UserStore {
             router.navigate('/activities');
 
             store.modalStore.closeModal();
-            
+
             //console.log(user);
         }
         catch (error) {
+            console.log(error);
             throw error;
         }
     }
 
-    setImage = (image: string) => { 
+    setImage = (image: string) => {
         if (this.user) {
             this.user.image = image;
         }
     }
 
-    setDisplayName = (displayName: string) => { 
+    setDisplayName = (displayName: string) => {
         if (this.user) {
             this.user.displayName = displayName;
         }

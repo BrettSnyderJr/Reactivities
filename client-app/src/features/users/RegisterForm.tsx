@@ -1,6 +1,5 @@
 import { Formik, Form, ErrorMessage } from 'formik';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { Button, Header } from 'semantic-ui-react';
 import MyTextInput from '../../app/common/form/MyTextInput';
 import { useStore } from '../../app/stores/store';
@@ -8,12 +7,12 @@ import * as Yup from 'yup';
 import ValidationErrors from '../errors/ValidationErrors';
 
 export default observer(function RegisterForm() {
-    
+
     const { userStore } = useStore();
 
     return (
         <Formik
-            initialValues={{ email: '', password: '', displayName: '', username: '', error: null }}
+            initialValues={{ email: '', password: '', displayName: '', username: '', error: '' }}
             onSubmit={(values, { setErrors }) => {
                 return (
                     userStore.register(values).catch((error) => {
@@ -38,7 +37,7 @@ export default observer(function RegisterForm() {
                         <MyTextInput name='password' placeholder='Password' type='password' />
                         <ErrorMessage
                             name='error'
-                            render={() => <ValidationErrors errors={errors.error} />}
+                            render={() => <ValidationErrors errors={[errors.error!]} />}
                         />
                         <Button
                             disabled={!isValid || !dirty || isSubmitting}

@@ -21,7 +21,7 @@ const ActivityForm = function () {
     const { activityStore } = useStore();
     const { createActivity, updateActivity, loadActivity, loadingInitial } = activityStore;
     const { id } = useParams<{ id: string }>();
-    
+
     const [activity, setActivity] = useState<ActivityFormValues>(new ActivityFormValues());
 
     const validationSchema = Yup.object({
@@ -34,7 +34,7 @@ const ActivityForm = function () {
     })
 
     useEffect(() => {
-        
+
         if (id) {
             loadActivity(id).then((activity) => {
                 setActivity(new ActivityFormValues(activity));
@@ -42,19 +42,19 @@ const ActivityForm = function () {
         }
 
     }, [id, loadActivity])
-    
+
 
     function handleFormSubmit(activity: ActivityFormValues) {
 
         if (!activity.id) {
 
-            let newActivity = {
+            const newActivity = {
                 ...activity,
                 id: uuid()
             }
 
             createActivity(newActivity).then(() => {
-                
+
                 navigate(`/activities/${newActivity.id}`);
             });
 
@@ -62,7 +62,7 @@ const ActivityForm = function () {
             updateActivity(activity).then(() => {
                 navigate(`/activities/${activity.id}`);
             })
-        } 
+        }
     }
 
     if(loadingInitial) return <LoadingComponent content='Loading Activity...' />
@@ -82,7 +82,7 @@ const ActivityForm = function () {
                         return (
                             <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
 
-                                <MyTextInput name='title' placeholder='title' />                              
+                                <MyTextInput name='title' placeholder='title' />
                                 <MyTextArea placeholder='Description' rows={3} name='description' />
                                 <MySelectInput placeholder='Category' name='category' options={categoryOptions} />
                                 <MyDateInput

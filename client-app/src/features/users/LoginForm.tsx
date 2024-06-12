@@ -1,12 +1,11 @@
 import { Formik, Form, ErrorMessage } from 'formik';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { Button, Header, Label } from 'semantic-ui-react';
 import MyTextInput from '../../app/common/form/MyTextInput';
 import { useStore } from '../../app/stores/store';
 
 export default observer(function LoginForm() {
-    
+
     const { userStore } = useStore();
 
     return (
@@ -14,7 +13,7 @@ export default observer(function LoginForm() {
             initialValues={{ email: '', password: '', error: null }}
             onSubmit={(values, { setErrors }) => {
                 return (
-                    userStore.login(values).catch((error) => {
+                    userStore.login(values).catch(() => {
                         return setErrors({ error: 'Invalid email or password' })
                     })
                 )

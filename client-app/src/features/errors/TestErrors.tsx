@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {Button, Header, Segment} from "semantic-ui-react";
 import axios from 'axios';
 import ValidationErrors from './ValidationErrors';
 
 export default function TestErrors() {
-    //const baseUrl = process.env.REACT_APP_API_URL
+
+    // const baseUrl = import.meta.env.VITE_API_URL + '/api/'
+
     const [errors, setErrors] = useState(null);
 
     function handleNotFound() {
@@ -44,7 +46,7 @@ export default function TestErrors() {
                     <Button onClick={handleBadGuid} content='Bad Guid' basic primary />
                 </Button.Group>
             </Segment>
-            {errors && 
+            {errors &&
                 <ValidationErrors errors={errors} />
             }
         </>

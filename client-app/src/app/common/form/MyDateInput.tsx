@@ -1,10 +1,9 @@
 import { useField } from 'formik';
-import React from 'react';
 import { Form, Label } from 'semantic-ui-react';
 import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 
 const MyDateInput = function (props: Partial<ReactDatePickerProps>) {
-    
+
     const [field, meta, helpers] = useField(props.name!);
 
     return (

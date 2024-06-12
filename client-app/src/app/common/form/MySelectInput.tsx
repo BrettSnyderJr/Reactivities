@@ -1,16 +1,15 @@
 import { useField } from 'formik';
-import React from 'react';
 import { Form, Label, Select } from 'semantic-ui-react';
 
 interface Props {
     placeholder: string;
     name: string;
-    options: any;
+    options: {text:string, value:string}[];
     label?: string;
 }
 
 const MySelectInput = function (props: Props) {
-    
+
     const [field, meta, helpers] = useField(props.name)
 
     return (
@@ -20,7 +19,7 @@ const MySelectInput = function (props: Props) {
                 clearable
                 options={props.options}
                 value={field.value || null}
-                onChange={(event, data) => {
+                onChange={(_, data) => {
                     helpers.setValue(data.value);
                 }}
                 onBlur={() => {

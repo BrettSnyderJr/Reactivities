@@ -1,6 +1,5 @@
 import { format } from 'date-fns';
 import { observer } from 'mobx-react-lite';
-import React from 'react'
 import { Link } from 'react-router-dom';
 import {Button, Header, Item, Segment, Image, Label} from 'semantic-ui-react'
 import {Activity} from "../../../app/models/activity";
@@ -24,7 +23,7 @@ interface Props {
 }
 
 export default observer(function ActivityDetailedHeader({ activity }: Props) {
-    
+
     const { activityStore: { updateAttendance, loading, cancelActivityToggle } } = useStore();
 
     return (
@@ -75,7 +74,7 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
                                 onClick={cancelActivityToggle}
                                 loading={loading}
                             />
-                                
+
                             <Button
                                 as={Link}
                                 to={`/activity/manage/${activity.id}`}
@@ -86,7 +85,7 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
                                 Manage Event
                             </Button>
                         </>
-                        
+
                     ) : activity.isGoing ?
                         (
                             <Button loading={loading} onClick={updateAttendance}>Cancel attendance</Button>
@@ -102,7 +101,7 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
                             </Button>
                         )
                 }
-                
+
             </Segment>
         </Segment.Group>
     )

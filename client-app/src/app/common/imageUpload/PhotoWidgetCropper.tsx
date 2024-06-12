@@ -1,8 +1,7 @@
-import React from 'react';
 import { Cropper } from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 
-interface Props { 
+interface Props {
     imagePreview: string;
     setCropper: (cropper: Cropper) => void;
 }
