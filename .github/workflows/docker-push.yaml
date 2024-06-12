@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - 'main'
+    paths-ignore:
+      - '**/*.md' # ignores all markdown files in the repository
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 jobs:
