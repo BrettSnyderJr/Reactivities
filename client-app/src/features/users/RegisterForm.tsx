@@ -4,7 +4,7 @@ import { Button, Header } from 'semantic-ui-react';
 import MyTextInput from '../../app/common/form/MyTextInput';
 import { useStore } from '../../app/stores/store';
 import * as Yup from 'yup';
-import ValidationErrors from '../errors/ValidationErrors';
+import ValidationError from '../errors/ValidationError';
 
 export default observer(function RegisterForm() {
 
@@ -12,7 +12,7 @@ export default observer(function RegisterForm() {
 
     return (
         <Formik
-            initialValues={{ email: '', password: '', displayName: '', username: '', error: '' }}
+            initialValues={{ email: '', password: '', displayName: '', username: '', error: null }}
             onSubmit={(values, { setErrors }) => {
                 return (
                     userStore.register(values).catch((error) => {
@@ -35,10 +35,7 @@ export default observer(function RegisterForm() {
                         <MyTextInput name='username' placeholder='Username' />
                         <MyTextInput name='email' placeholder='Email' />
                         <MyTextInput name='password' placeholder='Password' type='password' />
-                        <ErrorMessage
-                            name='error'
-                            render={() => <ValidationErrors errors={[errors.error!]} />}
-                        />
+                        <ErrorMessage name='error' render={() => <ValidationError errors={errors.error as unknown as string[]} />}/>
                         <Button
                             disabled={!isValid || !dirty || isSubmitting}
                             loading={isSubmitting}

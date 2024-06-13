@@ -62,6 +62,18 @@ namespace API.Controllers
                 return ValidationProblem();
             }
 
+            var validator = new PasswordValidator();
+            var vResult = validator.Validate(registerDto);
+
+            if (!vResult.IsValid)
+            {
+                foreach (var failure in vResult.Errors)
+                {
+                    ModelState.AddModelError("password", failure.ErrorMessage);
+                }
+                return ValidationProblem();
+            }
+
             // Create new user
             var user = new AppUser
             {
@@ -71,13 +83,13 @@ namespace API.Controllers
             };
 
             // Create user with given password in user store
-            var result = await _userManager.CreateAsync(user, registerDto.Password);
+            //var result = await _userManager.CreateAsync(user, registerDto.Password);
 
             // If user was created then return user object
-            if (result.Succeeded)
-            {
-                return CreateUserObject(user);
-            }
+            //if (result.Succeeded)
+            //{
+            //return CreateUserObject(user);
+            //}
 
             return BadRequest("There was a problem registering the user");
         }

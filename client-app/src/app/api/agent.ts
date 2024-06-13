@@ -87,6 +87,7 @@ axios.interceptors.response.use(async response => {
 
                 for (const key in data.errors) {
                     if (data.errors[key]) {
+                        //console.log(data.errors[key]);
                         modalStateErrors.push(data.errors[key]);
                     }
                 }

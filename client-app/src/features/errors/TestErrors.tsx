@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {Button, Header, Segment} from "semantic-ui-react";
 import axios from 'axios';
-import ValidationErrors from './ValidationErrors';
+import ValidationError from './ValidationError';
 
 export default function TestErrors() {
 
@@ -47,7 +47,7 @@ export default function TestErrors() {
                 </Button.Group>
             </Segment>
             {errors &&
-                <ValidationErrors errors={errors} />
+                <ValidationError errors={errors} />
             }
         </>
     )
